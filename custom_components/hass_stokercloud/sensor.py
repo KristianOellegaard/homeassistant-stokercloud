@@ -62,7 +62,7 @@ class StokerCloudControllerMixin:
     @property
     def name(self) -> str:
         """Return the name of the sensor."""
-        return self._name
+        return "NBE %s" % self._name
 
     @property
     def is_on(self):
@@ -77,6 +77,7 @@ class StokerCloudControllerMixin:
         logger.debug("Updating %s" % self.name)
         self.controller_data = self.client.controller_data()
         self._state = getattr(self.controller_data, self.client_key)
+        logger.debug("New state %s" % self._state)
 
 
 class StokerCloudControllerBinarySensor(StokerCloudControllerMixin, BinarySensorEntity):
