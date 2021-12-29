@@ -10,31 +10,23 @@ from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from homeassistant.helpers.typing import ConfigType, DiscoveryInfoType
 
-from stokercloud.client import Client as StokerCloudClient
-from stokercloud.controller_data import PowerState
 
-from homeassistant.const import CONF_USERNAME
+from stokercloud.controller_data import PowerState
+from stokercloud.client import Client as StokerCloudClient
+
+
 import datetime
 
 from .const import DOMAIN
 
 MIN_TIME_BETWEEN_UPDATES = datetime.timedelta(minutes=1)
 
-def setup_platform(
-    hass: HomeAssistant,
-    config: ConfigType,
-    add_entities: AddEntitiesCallback,
-    discovery_info: DiscoveryInfoType | None = None
-) -> None:
-    """Set up the sensor platform."""
-    pass
-
 async def async_setup_entry(hass, config, async_add_entities):
     """Set up the sensor platform."""
-    c = StokerCloudClient(config.data[CONF_USERNAME])
+    client = hass.data[DOMAIN][config.entry_id]
     async_add_entities([
-        StokerCloudControllerSensor(c, 'Running?', 'running', 'power'),
-        StokerCloudControllerSensor(c, 'Alarm?', 'running', 'problem')
+        StokerCloudControllerSensor(client, 'Running?', 'running', 'power'),
+        StokerCloudControllerSensor(client, 'Alarm?', 'running', 'problem')
     ])
 
 
