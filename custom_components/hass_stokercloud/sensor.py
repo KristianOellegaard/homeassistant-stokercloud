@@ -12,7 +12,7 @@ from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from homeassistant.helpers.typing import ConfigType, DiscoveryInfoType
 
 
-from stokercloud.controller_data import PowerState, Unit
+from stokercloud.controller_data import PowerState, Unit, Value
 from stokercloud.client import Client as StokerCloudClient
 
 
@@ -71,11 +71,13 @@ class StokerCloudControllerSensor(StokerCloudControllerMixin, SensorEntity):
     def native_value(self):
         """Return the value reported by the sensor."""
         if self._state:
-            return self._state.value
+            if isinstance(self._state, Value):
+                return self._state.value
+            return self._state
 
     @property
     def native_unit_of_measurement(self):
-        if self._state:
+        if self._state and isinstance(self._state, Value):
             return {
                 Unit.KWH: POWER_KILO_WATT,
                 Unit.DEGREE: TEMP_CELSIUS,
