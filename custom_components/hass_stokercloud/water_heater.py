@@ -31,7 +31,7 @@ async def async_setup_entry(hass, config, async_add_entities):
 
 class StokerCloudWaterHeater(StokerCloudControllerMixin, WaterHeaterEntity):
     _attr_temperature_unit = TEMP_CELSIUS
-    
+
     @property
     def current_operation(self) -> str:
         if self.client.controller_data().state == State.HOT_WATER:
