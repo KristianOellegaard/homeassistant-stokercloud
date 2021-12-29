@@ -34,14 +34,17 @@ class StokerCloudWaterHeater(StokerCloudControllerMixin, WaterHeaterEntity):
 
     @property
     def current_operation(self) -> str:
-        if self.client.controller_data().state == State.HOT_WATER:
-            return STATE_ON
-        return STATE_OFF
+        if self.controller_data:
+            if self.controller_data.state == State.HOT_WATER:
+                return STATE_ON
+            return STATE_OFF
 
     @property
     def current_temperature(self):
-        return self.client.controller_data().hotwater_temperature_current
+        if self.controller_data:
+            return self.controller_data.hotwater_temperature_current
 
     @property
     def target_temperature(self):
-        return self.client.controller_data().hotwater_temperature_requested
+        if self.controller_data:
+            return self.controller_data.hotwater_temperature_requested
