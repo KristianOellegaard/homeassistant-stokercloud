@@ -52,7 +52,7 @@ class StokerCloudControllerMixin:
     @property
     def unique_id(self):
         """The unique id of the sensor."""
-        return f'{self.serial}-{self._name}'
+        return f'{self._serial}-{self._name}'
 
     @property
     def device_class(self):
