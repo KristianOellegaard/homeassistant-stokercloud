@@ -27,7 +27,7 @@ def setup_platform(
     discovery_info: DiscoveryInfoType | None = None
 ) -> None:
     """Set up the sensor platform."""
-    c = StokerCloudClient(config.data[CONF_USERNAME])
+    c = StokerCloudClient(config[CONF_USERNAME])
     add_entities([
         StokerCloudControllerSensor(c, 'Running?', 'running', 'power'),
         StokerCloudControllerSensor(c, 'Alarm?', 'alarm', 'problem')
