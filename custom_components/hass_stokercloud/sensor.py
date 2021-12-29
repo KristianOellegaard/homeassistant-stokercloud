@@ -20,9 +20,18 @@ from .const import DOMAIN
 
 MIN_TIME_BETWEEN_UPDATES = datetime.timedelta(minutes=1)
 
+def setup_platform(
+    hass: HomeAssistant,
+    config: ConfigType,
+    add_entities: AddEntitiesCallback,
+    discovery_info: DiscoveryInfoType | None = None
+) -> None:
+    """Set up the sensor platform."""
+    pass
+
 async def async_setup_entry(hass, config, async_add_entities):
     """Set up the sensor platform."""
-    c = StokerCloudClient(config[CONF_USERNAME])
+    c = StokerCloudClient(config.data[CONF_USERNAME])
     async_add_entities([
         StokerCloudControllerSensor(c, 'Running?', 'running', 'power'),
         StokerCloudControllerSensor(c, 'Alarm?', 'running', 'problem')
