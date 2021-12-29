@@ -1,0 +1,1 @@
+DOMAIN = "hass_stokercloud"
