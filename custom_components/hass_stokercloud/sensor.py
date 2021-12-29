@@ -57,6 +57,10 @@ class StokerCloudControllerBinarySensor(StokerCloudControllerMixin, BinarySensor
         """If the switch is currently on or off."""
         return self._state is PowerState.ON
 
+    @property
+    def device_class(self):
+        return self._device_class
+
 
 class StokerCloudControllerSensor(StokerCloudControllerMixin, SensorEntity):
     """Representation of a Sensor."""
@@ -66,6 +70,9 @@ class StokerCloudControllerSensor(StokerCloudControllerMixin, SensorEntity):
         super(StokerCloudControllerSensor, self).__init__(client, serial, name, client_key)
         self._device_class = device_class
 
+    @property
+    def device_class(self):
+        return self._device_class
 
     @property
     def native_value(self):

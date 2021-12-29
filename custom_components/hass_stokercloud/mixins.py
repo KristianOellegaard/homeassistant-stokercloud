@@ -21,10 +21,6 @@ class StokerCloudControllerMixin:
         return f'{self._serial}-{self._name}'
 
     @property
-    def device_class(self):
-        return self._device_class
-
-    @property
     def name(self) -> str:
         """Return the name of the sensor."""
         return "NBE %s" % self._name
