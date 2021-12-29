@@ -40,7 +40,7 @@ class StokerCloudControllerSensor(BinarySensorEntity):
 
     def __init__(self, client: StokerCloudClient, name: str, client_key: str, device_class):
         """Initialize the sensor."""
-        logging.debug("Initializing sensor %s" % self.name)
+        logging.debug("Initializing sensor %s" % name)
         self._state = None
         self._name = name
         self.client = client
