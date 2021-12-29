@@ -16,7 +16,7 @@ from stokercloud.client import Client as StokerCloudClient
 
 
 import datetime
-
+from homeassistant.const import CONF_USERNAME
 from .const import DOMAIN
 
 import logging
@@ -29,7 +29,7 @@ MIN_TIME_BETWEEN_UPDATES = datetime.timedelta(minutes=1)
 async def async_setup_entry(hass, config, async_add_entities):
     """Set up the sensor platform."""
     client = hass.data[DOMAIN][config.entry_id]
-    serial = client.controller_data().serial_number  # Avoid multi fetch
+    serial = config.data[CONF_USERNAME]
     async_add_entities([
         StokerCloudControllerBinarySensor(client, serial, 'Running', 'running', 'power'),
         StokerCloudControllerBinarySensor(client, serial, 'Alarm', 'alarm', 'problem'),
