@@ -18,7 +18,7 @@ import datetime
 
 from .const import DOMAIN
 
-MIN_TIME_BETWEEN_UPDATES = datetime.timedelta(minutes=1)
+SCAN_INTERVAL = datetime.timedelta(minutes=1)
 
 def setup_platform(
     hass: HomeAssistant,
@@ -27,15 +27,20 @@ def setup_platform(
     discovery_info: DiscoveryInfoType | None = None
 ) -> None:
     """Set up the sensor platform."""
-    pass
+    c = StokerCloudClient(config.data[CONF_USERNAME])
+    add_entities([
+        StokerCloudControllerSensor(c, 'Running?', 'running', 'power'),
+        StokerCloudControllerSensor(c, 'Alarm?', 'alarm', 'problem')
+    ], update_before_add=True)
 
 async def async_setup_entry(hass, config, async_add_entities):
     """Set up the sensor platform."""
-    c = StokerCloudClient(config.data[CONF_USERNAME])
-    async_add_entities([
-        StokerCloudControllerSensor(c, 'Running?', 'running', 'power'),
-        StokerCloudControllerSensor(c, 'Alarm?', 'running', 'problem')
-    ])
+    pass
+    # c = StokerCloudClient(config.data[CONF_USERNAME])
+    # async_add_entities([
+    #     StokerCloudControllerSensor(c, 'Running?', 'running', 'power'),
+    #     StokerCloudControllerSensor(c, 'Alarm?', 'alarm', 'problem')
+    # ], update_before_add=True)
 
 
 class StokerCloudControllerSensor(BinarySensorEntity):
@@ -49,7 +54,7 @@ class StokerCloudControllerSensor(BinarySensorEntity):
         self.client_key = client_key
         self._device_class = device_class
 
-        
+
     @property
     def device_class(self):
         return self._device_class
