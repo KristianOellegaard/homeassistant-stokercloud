@@ -108,7 +108,8 @@ class StokerCloudControllerSensor(StokerCloudControllerMixin, SensorEntity):
     @property
     def native_value(self):
         """Return the value reported by the sensor."""
-        return self._state.value
+        if self._state:
+            return self._state.value
 
     # @property
     # def native_unit_of_measurement(self):
