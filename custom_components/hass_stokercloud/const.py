@@ -4,4 +4,4 @@ import voluptuous as vol
 
 DOMAIN = "hass_stokercloud"
 DATA_SCHEMA = vol.Schema({vol.Required(CONF_USERNAME): cv.string})
-PLATFORMS = ['sensor']
+PLATFORMS = ['sensor', 'water_heater']
