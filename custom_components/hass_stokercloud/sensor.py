@@ -77,4 +77,5 @@ class StokerCloudControllerSensor(BinarySensorEntity):
 
         This is the only method that should fetch new data for Home Assistant.
         """
+        logger.debug("Updating %s" % self.name)
         self._state = getattr(self.client.controller_data(), self.client_key)
