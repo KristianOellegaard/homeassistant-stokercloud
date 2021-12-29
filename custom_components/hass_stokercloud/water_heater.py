@@ -31,6 +31,7 @@ async def async_setup_entry(hass, config, async_add_entities):
 
 class StokerCloudWaterHeater(StokerCloudControllerMixin, WaterHeaterEntity):
     _attr_temperature_unit = TEMP_CELSIUS
+    _attr_supported_features = []
 
     @property
     def current_operation(self) -> str:
