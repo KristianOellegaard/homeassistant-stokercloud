@@ -1,4 +1,3 @@
-import voluptuous as vol
 from .const import DOMAIN, DATA_SCHEMA
 from homeassistant import config_entries
 from homeassistant.const import CONF_USERNAME
