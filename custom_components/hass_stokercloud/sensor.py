@@ -17,7 +17,7 @@ from stokercloud.client import Client as StokerCloudClient
 
 
 import datetime
-from homeassistant.const import CONF_USERNAME
+from homeassistant.const import CONF_USERNAME, POWER_KILO_WATT, TEMP_CELSIUS
 from .const import DOMAIN
 
 import logging
@@ -94,8 +94,6 @@ class StokerCloudControllerBinarySensor(StokerCloudControllerMixin, BinarySensor
         return self._state is PowerState.ON
 
 
-
-
 class StokerCloudControllerSensor(StokerCloudControllerMixin, SensorEntity):
     """Representation of a Sensor."""
 
@@ -111,8 +109,10 @@ class StokerCloudControllerSensor(StokerCloudControllerMixin, SensorEntity):
         if self._state:
             return self._state.value
 
-    # @property
-    # def native_unit_of_measurement(self):
-    #     return {
-    #         Unit.KWH:
-    #     }.get(self.state.unit)
+    @property
+    def native_unit_of_measurement(self):
+        if self._state:
+            return {
+                Unit.KWH: POWER_KILO_WATT,
+                Unit.DEGREE: TEMP_CELSIUS,
+            }.get(self.state.unit)
