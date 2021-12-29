@@ -115,4 +115,4 @@ class StokerCloudControllerSensor(StokerCloudControllerMixin, SensorEntity):
             return {
                 Unit.KWH: POWER_KILO_WATT,
                 Unit.DEGREE: TEMP_CELSIUS,
-            }.get(self.state.unit)
+            }.get(self._state.unit)
