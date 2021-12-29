@@ -6,12 +6,13 @@ from homeassistant.components.binary_sensor import (
     BinarySensorEntity,
     BinarySensorEntityDescription,
 )
+from homeassistant.components.sensor import SensorDeviceClass, SensorEntity
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from homeassistant.helpers.typing import ConfigType, DiscoveryInfoType
 
 
-from stokercloud.controller_data import PowerState
+from stokercloud.controller_data import PowerState, Unit
 from stokercloud.client import Client as StokerCloudClient
 
 
@@ -33,8 +34,8 @@ async def async_setup_entry(hass, config, async_add_entities):
     async_add_entities([
         StokerCloudControllerBinarySensor(client, serial, 'Running', 'running', 'power'),
         StokerCloudControllerBinarySensor(client, serial, 'Alarm', 'alarm', 'problem'),
-        StokerCloudControllerSensor(client, serial, 'Boiler Temperature', 'boiler_temperature', 'temperature'),
-        StokerCloudControllerSensor(client, serial, 'Boiler Effect', 'boiler_kwh', 'power'),
+        StokerCloudControllerSensor(client, serial, 'Boiler Temperature', 'boiler_temperature', SensorDeviceClass.TEMPERATURE),
+        StokerCloudControllerSensor(client, serial, 'Boiler Effect', 'boiler_kwh', SensorDeviceClass.POWER),
     ])
 
 
@@ -94,10 +95,22 @@ class StokerCloudControllerBinarySensor(StokerCloudControllerMixin, BinarySensor
 
 
 
-class StokerCloudControllerSensor(StokerCloudControllerMixin, BinarySensorEntity):
+class StokerCloudControllerSensor(StokerCloudControllerMixin, SensorEntity):
     """Representation of a Sensor."""
 
     def __init__(self, client: StokerCloudClient, serial, name: str, client_key: str, device_class):
         """Initialize the sensor."""
         super(StokerCloudControllerSensor, self).__init__(client, serial, name, client_key)
         self._device_class = device_class
+
+
+    @property
+    def native_value(self):
+        """Return the value reported by the sensor."""
+        return self.state.value
+
+    # @property
+    # def native_unit_of_measurement(self):
+    #     return {
+    #         Unit.KWH:
+    #     }.get(self.state.unit)
