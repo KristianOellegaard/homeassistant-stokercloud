@@ -1,6 +1,7 @@
 {
   "domain": "hass_stokercloud",
   "name": "NBE Stoker Cloud",
+  "version": "0.0.1",
   "documentation": "https://github.com/KristianOellegaard/homeassistant-stokercloud",
   "issue_tracker": "https://github.com/KristianOellegaard/homeassistant-stokercloud/issues",
   "dependencies": [],
