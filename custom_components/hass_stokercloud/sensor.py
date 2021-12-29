@@ -63,11 +63,6 @@ class StokerCloudControllerSensor(BinarySensorEntity):
         return self._name
 
     @property
-    def state(self):
-        """Return the state of the sensor."""
-        return self._state
-
-    @property
     def is_on(self):
         """If the switch is currently on or off."""
         return self._state is PowerState.ON
