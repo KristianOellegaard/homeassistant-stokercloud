@@ -1,7 +1,8 @@
 {
     "name": "NBE Stoker Cloud",
     "domains": [
-        "binary_sensor",
+        "sensor",
     ],
+    "render_readme": true,
     "homeassistant": "2021.11.0"
 }
