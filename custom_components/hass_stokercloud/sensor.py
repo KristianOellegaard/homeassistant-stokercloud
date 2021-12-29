@@ -19,14 +19,19 @@ import datetime
 
 from .const import DOMAIN
 
+import logging
+
+
+logger = logging.getLogger(__name__)
+
 MIN_TIME_BETWEEN_UPDATES = datetime.timedelta(minutes=1)
 
 async def async_setup_entry(hass, config, async_add_entities):
     """Set up the sensor platform."""
     client = hass.data[DOMAIN][config.entry_id]
     async_add_entities([
-        StokerCloudControllerSensor(client, 'Running?', 'running', 'power'),
-        StokerCloudControllerSensor(client, 'Alarm?', 'running', 'problem')
+        StokerCloudControllerSensor(client, 'Running', 'running', 'power'),
+        StokerCloudControllerSensor(client, 'Alarm', 'running', 'problem')
     ])
 
 
@@ -35,11 +40,17 @@ class StokerCloudControllerSensor(BinarySensorEntity):
 
     def __init__(self, client: StokerCloudClient, name: str, client_key: str, device_class):
         """Initialize the sensor."""
+        logging.debug("Initializing sensor %s" % self.name)
         self._state = None
         self._name = name
         self.client = client
         self.client_key = client_key
         self._device_class = device_class
+
+    @property
+    def unique_id(self):
+        """The unique id of the sensor."""
+        return self._name  # TODO: Change into something better
 
         
     @property
