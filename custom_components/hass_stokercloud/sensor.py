@@ -47,7 +47,12 @@ class StokerCloudControllerSensor(BinarySensorEntity):
         self._name = name
         self.client = client
         self.client_key = client_key
-        self.device_class = device_class
+        self._device_class = device_class
+
+        
+    @property
+    def device_class(self):
+        return self._device_class
 
     @property
     def name(self) -> str:
