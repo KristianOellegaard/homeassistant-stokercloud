@@ -43,9 +43,9 @@ class StokerCloudWaterHeater(StokerCloudControllerMixin, WaterHeaterEntity):
     @property
     def current_temperature(self):
         if self.controller_data and self.controller_data.hotwater_temperature_current:
-            return self.controller_data.hotwater_temperature_current.value
+            return float(self.controller_data.hotwater_temperature_current.value)
 
     @property
     def target_temperature(self):
         if self.controller_data and self.controller_data.hotwater_temperature_requested:
-            return self.controller_data.hotwater_temperature_requested.value
+            return float(self.controller_data.hotwater_temperature_requested.value)
