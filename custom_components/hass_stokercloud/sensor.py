@@ -17,7 +17,7 @@ from stokercloud.client import Client as StokerCloudClient
 
 
 import datetime
-from homeassistant.const import CONF_USERNAME, POWER_KILO_WATT, TEMP_CELSIUS
+from homeassistant.const import CONF_USERNAME, POWER_KILO_WATT, TEMP_CELSIUS, MASS_KILOGRAMS
 from .const import DOMAIN
 from .mixins import StokerCloudControllerMixin
 
@@ -37,7 +37,8 @@ async def async_setup_entry(hass, config, async_add_entities):
         StokerCloudControllerSensor(client, serial, 'Boiler Temperature', 'boiler_temperature_current', SensorDeviceClass.TEMPERATURE),
         StokerCloudControllerSensor(client, serial, 'Boiler Temperature Requested', 'boiler_temperature_requested', SensorDeviceClass.TEMPERATURE),
         StokerCloudControllerSensor(client, serial, 'Boiler Effect', 'boiler_kwh', SensorDeviceClass.POWER),
-        StokerCloudControllerSensor(client, serial, 'State', 'state', None),
+        StokerCloudControllerSensor(client, serial, 'Total Consumption', 'consumption_total'),
+        StokerCloudControllerSensor(client, serial, 'State', 'state'),
     ])
 
 
@@ -65,7 +66,7 @@ class StokerCloudControllerBinarySensor(StokerCloudControllerMixin, BinarySensor
 class StokerCloudControllerSensor(StokerCloudControllerMixin, SensorEntity):
     """Representation of a Sensor."""
 
-    def __init__(self, client: StokerCloudClient, serial, name: str, client_key: str, device_class):
+    def __init__(self, client: StokerCloudClient, serial, name: str, client_key: str, device_class=None):
         """Initialize the sensor."""
         super(StokerCloudControllerSensor, self).__init__(client, serial, name, client_key)
         self._device_class = device_class
@@ -88,4 +89,5 @@ class StokerCloudControllerSensor(StokerCloudControllerMixin, SensorEntity):
             return {
                 Unit.KWH: POWER_KILO_WATT,
                 Unit.DEGREE: TEMP_CELSIUS,
+                Unit.KILO_GRAM: MASS_KILOGRAMS,
             }.get(self._state.unit)
