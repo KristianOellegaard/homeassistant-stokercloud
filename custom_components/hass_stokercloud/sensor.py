@@ -6,7 +6,7 @@ from homeassistant.components.binary_sensor import (
     BinarySensorEntity,
     BinarySensorEntityDescription,
 )
-from homeassistant.components.sensor import SensorDeviceClass, SensorEntity
+from homeassistant.components.sensor import SensorDeviceClass, SensorEntity, SensorStateClass
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from homeassistant.helpers.typing import ConfigType, DiscoveryInfoType
@@ -37,7 +37,7 @@ async def async_setup_entry(hass, config, async_add_entities):
         StokerCloudControllerSensor(client, serial, 'Boiler Temperature', 'boiler_temperature_current', SensorDeviceClass.TEMPERATURE),
         StokerCloudControllerSensor(client, serial, 'Boiler Temperature Requested', 'boiler_temperature_requested', SensorDeviceClass.TEMPERATURE),
         StokerCloudControllerSensor(client, serial, 'Boiler Effect', 'boiler_kwh', SensorDeviceClass.POWER),
-        StokerCloudControllerSensor(client, serial, 'Total Consumption', 'consumption_total'),
+        StokerCloudControllerSensor(client, serial, 'Total Consumption', 'consumption_total', state_class=SensorStateClass.TOTAL_INCREASING), # state class STATE_CLASS_TOTAL_INCREASING
         StokerCloudControllerSensor(client, serial, 'State', 'state'),
     ])
 
@@ -66,10 +66,11 @@ class StokerCloudControllerBinarySensor(StokerCloudControllerMixin, BinarySensor
 class StokerCloudControllerSensor(StokerCloudControllerMixin, SensorEntity):
     """Representation of a Sensor."""
 
-    def __init__(self, client: StokerCloudClient, serial, name: str, client_key: str, device_class=None):
+    def __init__(self, client: StokerCloudClient, serial, name: str, client_key: str, device_class=None, state_class=None):
         """Initialize the sensor."""
         super(StokerCloudControllerSensor, self).__init__(client, serial, name, client_key)
         self._device_class = device_class
+        self._attr_state_class = state_class
 
     @property
     def device_class(self):
