@@ -17,7 +17,7 @@ from stokercloud.client import Client as StokerCloudClient
 
 
 import datetime
-from homeassistant.const import CONF_USERNAME, POWER_KILO_WATT, TEMP_CELSIUS, MASS_KILOGRAMS
+from homeassistant.const import CONF_USERNAME, UnitOfPower, UnitOfTemperature, UnitOfMass
 from .const import DOMAIN
 from .mixins import StokerCloudControllerMixin
 
@@ -88,7 +88,7 @@ class StokerCloudControllerSensor(StokerCloudControllerMixin, SensorEntity):
     def native_unit_of_measurement(self):
         if self._state and isinstance(self._state, Value):
             return {
-                Unit.KWH: POWER_KILO_WATT,
-                Unit.DEGREE: TEMP_CELSIUS,
-                Unit.KILO_GRAM: MASS_KILOGRAMS,
+                Unit.KWH: UnitOfPower.WATT,
+                Unit.DEGREE: UnitOfTemperature.CELSIUS,
+                Unit.KILO_GRAM: UnitOfMass.KILOGRAMS,
             }.get(self._state.unit)
