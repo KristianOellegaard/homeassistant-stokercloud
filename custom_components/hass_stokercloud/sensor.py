@@ -40,10 +40,9 @@ async def async_setup_entry(hass, config, async_add_entities):
         StokerCloudControllerSensor(client, serial, 'Total Consumption', 'consumption_total', state_class=SensorStateClass.TOTAL_INCREASING), # state class STATE_CLASS_TOTAL_INCREASING
         StokerCloudControllerSensor(client, serial, 'State', 'state'),
 
-        StokerCloudControllerSensor(client, serial, 'Current Water Heater Temperature', 'hotwater_temperature_current', SensorDeviceClass.TEMPERATURE),
-        StokerCloudControllerSensor(client, serial, 'Requested Water Heater Temperature', 'hotwater_temperature_requested', SensorDeviceClass.TEMPERATURE),
+        StokerCloudWaterHeaterTemperatureSensor(client, serial, 'Current Water Heater Temperature', 'hotwater_temperature_current'),
+        StokerCloudWaterHeaterTemperatureSensor(client, serial, 'Requested Water Heater Temperature', 'hotwater_temperature_requested'),
     ])
-
 
 
 
@@ -95,3 +94,35 @@ class StokerCloudControllerSensor(StokerCloudControllerMixin, SensorEntity):
                 Unit.DEGREE: UnitOfTemperature.CELSIUS,
                 Unit.KILO_GRAM: UnitOfMass.KILOGRAMS,
             }.get(self._state.unit)
+
+class StokerCloudWaterHeaterTemperatureSensor(StokerCloudControllerMixin, SensorEntity):
+    """Representation of a Water Heater Temperature Sensor."""
+
+    def __init__(self, client, serial, name, client_key):
+        """Initialize the water heater temperature sensor."""
+        super().__init__(client, serial, name, client_key)
+        self._name = name
+        self._client_key = client_key
+
+    @property
+    def native_value(self):
+        """Return the value reported by the water heater temperature sensor with 2 decimal places."""
+        if self._state:
+            if hasattr(self._state, 'value'):
+                return round(self._state.value, 2)  # Round to 2 decimal places
+            return round(self._state, 2)
+
+    @property
+    def device_class(self):
+        """Return the device class for temperature."""
+        return SensorDeviceClass.TEMPERATURE
+
+    @property
+    def native_unit_of_measurement(self):
+        """Return the unit of measurement (Celsius)."""
+        return UnitOfTemperature.CELSIUS
+
+    @property
+    def available(self):
+        """Return if the sensor is available (state is not None)."""
+        return self._state is not None
