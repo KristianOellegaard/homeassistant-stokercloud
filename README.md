@@ -10,7 +10,7 @@ You can install the plugin via HACS using the following steps.
 
 Manual Install:
 1. Open HACS
-2. Clik the three dots on the top right
+2. Click the three dots on the top right
 4. Click "Custom repositories"
 5. Add https://github.com/nagels/homeassistant-stokercloud and a category of your choice (intergration will work just fine)
 
