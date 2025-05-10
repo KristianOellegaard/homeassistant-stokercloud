@@ -6,7 +6,9 @@ This is an integration between Home Assistant and stokercloud.dk
 
 You can install the plugin via HACS using the following steps.
 
-[![image](https://github.com/user-attachments/assets/e99278d9-5121-40a4-b9c7-af48561a9140)](https://my.home-assistant.io/redirect/hacs_repository/?owner=nagels&repository=homeassistant-stokercloud&category=integration)
+[![image](https://github.com/user-attachments/assets/e99278d9-5121-40a4-b9c7-af48561a9140)](https://my.home-assistant.io/redirect/hacs_repository/?owner=KristianOellegaard&repository=homeassistant-stokercloud&category=integration)
+
+
 
 Manual Install:
 1. Open HACS
