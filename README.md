@@ -34,5 +34,5 @@ Insert your Stokercloud username (This can be found in your stokercloud URL. htt
 
 Currently the integration is read-only so you do not need to enter your password
 
-If the entities added are "Uknown" - Please give the intregration a few minutes to fetch the data.
+If the entities added are "Unknown" - Please give the integration a few minutes to fetch the data.
 An alternative to waiting is to restart HA.
