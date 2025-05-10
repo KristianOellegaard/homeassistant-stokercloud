@@ -12,7 +12,7 @@ Manual Install:
 1. Open HACS
 2. Click the three dots on the top right
 4. Click "Custom repositories"
-5. Add https://github.com/nagels/homeassistant-stokercloud and a category of your choice (intergration will work just fine)
+5. Add https://github.com/nagels/homeassistant-stokercloud and a category of your choice (integration will work just fine)
 
 # Adding the integration
 
